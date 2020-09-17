@@ -1,3 +1,5 @@
+package com.oop;
+
 public class HeapSort {
     /**
      * Support method for sort method; converts into binary heap
@@ -5,17 +7,17 @@ public class HeapSort {
      * @param n array length
      * @param i root node of the subtree, that we're going to convert
      */
-    public void heapify(int a[], int n, int i){
+    private static void heapify(int[] a, int n, int i) {
         int root = i;
         int left = 2*i + 1;
         int right = 2*i + 2;
-
-        if (left < n && a[left] > a[root])
+        if (left < n && a[left] > a[root]) {
             root = left;
-        if (right < n && a[right] > a[root])
+        }
+        if (right < n && a[right] > a[root]) {
             root = right;
-        if (root != i)
-        {
+        }
+        if (root != i) {
             int t = a[i];
             a[i] = a[root];
             a[root] = t;
@@ -28,18 +30,16 @@ public class HeapSort {
      * @param a unsorted array
      * @return sorted array
      */
-    public int[] sort(int a[]){
+    public static void sort(int[] a) {
         int len = a.length;
-        for(int i=len/2-1; i>=0;i--){
+        for(int i=len/2-1; i>=0;i--) {
             heapify(a, len, i);
         }
-        for (int i=len-1; i>=0; i--)
-        {
+        for (int i=len-1; i>=0; i--) {
             int t = a[0];
             a[0] = a[i];
             a[i] = t;
             heapify(a, i, 0);
         }
-        return a;
     }
 }
