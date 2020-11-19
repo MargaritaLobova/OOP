@@ -2,19 +2,21 @@ package com.oop;
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * Class that can be used to find all the instances of the substring into the string.
+ * Implementation of KMP algorithm.
+ */
 public class SubstringSearch {
     private String fileName;
-
     SubstringSearch (String fName) {
         fileName = fName;
     }
 
-    private BufferedReader getReader() {
-        InputStream inputStream =
-                SubstringSearch.class.getClassLoader().getResourceAsStream(fileName);
-        return new BufferedReader(new InputStreamReader(inputStream));
-    }
-
+    /**
+     * @param sample substring
+     * @return the array of prefix-function values
+     * This is a subsidiary method for kmpSearch method.
+     */
     private int[] prefixFunction(String sample) {
         int [] values = new int[sample.length()];
         for (int i = 1; i < sample.length(); i++) {
@@ -27,13 +29,19 @@ public class SubstringSearch {
         return values;
     }
 
-    public ArrayList<Integer> kmpSearch(String sample) throws IOException {
-        BufferedReader bufferedReader = getReader();
+    /**
+     * @param sample Substring
+     * @param inputStream from which input stream bufferedReader is going to read
+     * @return ArrayList<Integer> of indexes of all the instances of the substring into the text(inputStream).
+     * @throws IOException if bufferedReader throws IOException
+     */
+    public ArrayList<Integer> kmpSearch(String sample, InputStream inputStream) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         ArrayList<Integer> entry = new ArrayList<>();
         int[] prefixFunc = prefixFunction(sample);
         int i = 0;
         int j = 0;
-        char[] buffer = new char[1000];
+        char[] buffer = new char[100000000];
         while (bufferedReader.read(buffer) > 0) {
             while (i < buffer.length) {
                 if (sample.charAt(j) == buffer[i]) {

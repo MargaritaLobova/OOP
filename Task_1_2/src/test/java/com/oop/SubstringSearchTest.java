@@ -1,36 +1,45 @@
 package com.oop;
 
 import org.junit.jupiter.api.Test;
-
 import java.io.*;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class SubstringSearchTest {
     @Test
-    public void test1() throws IOException {
-        SubstringSearch substringSearch = new SubstringSearch("test1.txt");
-            String substring = "aba";
-            ArrayList<Integer> actual;
-            actual = substringSearch.kmpSearch(substring);
-            ArrayList<Integer> expected = new ArrayList<>();
-            expected.add(10);
-            assertEquals(expected, actual);
+    public void easyTest() throws IOException {
+        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+        try (InputStream is = classloader.getResourceAsStream("input1.txt")) {
+            SubstringSearch substringSearch = new SubstringSearch("input1.txt");
+            String s = "okay";
+            ArrayList<Integer> res = substringSearch.kmpSearch(s, is);
+            ArrayList<Integer> correct = new ArrayList<>();
+            correct.add(7);
+            assertEquals(correct, res);
+        }
     }
-    @Test
-    public void test2() throws IOException {
-        SubstringSearch substringSearch = new SubstringSearch("test2.txt");
-            String substring = "new";
-            ArrayList<Integer> actual;
-            actual = substringSearch.kmpSearch(substring);
-            ArrayList<Integer> expected = new ArrayList<>();
-            expected.add(8);
-            assertEquals(expected, actual);
+   @Test
+    void bigTest() throws IOException {
+        String s = "input2.txt";
+        SubstringSearch substringSearch = new SubstringSearch(s);
+        FileWriter myWriter = new FileWriter(s);
+        Integer[] expected = new Integer[300];
+        try {
+            for (int i = 0; i < 300; i++){
+                myWriter.write("heyrandomtextrandomtextrandomtext");
+                expected[i] = i*33;
+            }
+            for (int i = 0; i < 160000000; i++) {
+                myWriter.write("wordwordwordwordwordwordwordwordwordwordwordwordwordword");
+            }
+            myWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        InputStream inputStream = new FileInputStream(s);
+        String sub = "hey";
+        ArrayList<Integer> actual = substringSearch.kmpSearch(sub,inputStream);
+        assertArrayEquals(expected, actual.toArray());
     }
 }
