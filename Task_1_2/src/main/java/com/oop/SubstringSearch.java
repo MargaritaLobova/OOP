@@ -1,4 +1,7 @@
 package com.oop;
+import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
+import org.junit.jupiter.params.provider.EmptySource;
+
 import java.io.*;
 import java.util.ArrayList;
 
@@ -38,18 +41,25 @@ public class SubstringSearch {
     public ArrayList<Integer> kmpSearch(String sample, InputStream inputStream) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         ArrayList<Integer> entry = new ArrayList<>();
+        if(sample.length()==0) {
+            return entry;
+        }
         int[] prefixFunc = prefixFunction(sample);
-        int i = 0;
         int j = 0;
-        char[] buffer = new char[100000000];
+        int z=0;
+        int l=0;
+        int length = sample.length()*2;
+        char[] buffer = new char[length];
+        char[] helpbuffer = new char[length];
         while (bufferedReader.read(buffer) > 0) {
+            int i = 0;
             while (i < buffer.length) {
                 if (sample.charAt(j) == buffer[i]) {
                     j++;
                     i++;
                 }
                 if (j == sample.length()) {
-                    entry.add(i - j);
+                    entry.add(i - j +z* buffer.length + l* buffer.length/2);
                     j = prefixFunc[j - 1];
                 } else if (i < buffer.length && sample.charAt(j) != buffer[i]) {
                     if (j != 0) {
@@ -57,8 +67,19 @@ public class SubstringSearch {
                     } else {
                         i = i + 1;
                     }
+                } else if(i >= buffer.length && bufferedReader.read(helpbuffer)>0 && j!=0 && j!=sample.length()) {
+                    /*buffer splits the substring*/
+                    for(int k=0; k<length/2; k++) {
+                        buffer[k] = buffer[k+length/2];
+                    }
+                    for(int k=0; k<length/2; k++) {
+                        buffer[length/2+k] = helpbuffer[k];
+                    }
+                    i = buffer.length/2;
+                     l++;
                 }
             }
+            z++;
         }
         return entry;
     }
