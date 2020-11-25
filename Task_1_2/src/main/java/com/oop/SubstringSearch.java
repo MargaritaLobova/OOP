@@ -1,20 +1,15 @@
 package com.oop;
-import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
-import org.junit.jupiter.params.provider.EmptySource;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class that can be used to find all the instances of the substring into the string.
  * Implementation of KMP algorithm.
  */
 public class SubstringSearch {
-    private String fileName;
-    SubstringSearch (String fName) {
-        fileName = fName;
-    }
-
     /**
      * @param sample substring
      * @return the array of prefix-function values
@@ -38,49 +33,47 @@ public class SubstringSearch {
      * @return ArrayList<Integer> of indexes of all the instances of the substring into the text(inputStream).
      * @throws IOException if bufferedReader throws IOException
      */
-    public ArrayList<Integer> kmpSearch(String sample, InputStream inputStream) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        ArrayList<Integer> entry = new ArrayList<>();
-        if(sample.length()==0) {
-            return entry;
-        }
-        int[] prefixFunc = prefixFunction(sample);
-        int j = 0;
-        int z=0;
-        int l=0;
-        int length = sample.length()*2;
-        char[] buffer = new char[length];
-        char[] helpbuffer = new char[length];
-        while (bufferedReader.read(buffer) > 0) {
-            int i = 0;
-            while (i < buffer.length) {
-                if (sample.charAt(j) == buffer[i]) {
-                    j++;
-                    i++;
-                }
-                if (j == sample.length()) {
-                    entry.add(i - j +z* buffer.length + l* buffer.length/2);
-                    j = prefixFunc[j - 1];
-                } else if (i < buffer.length && sample.charAt(j) != buffer[i]) {
-                    if (j != 0) {
-                        j = prefixFunc[j - 1];
-                    } else {
-                        i = i + 1;
-                    }
-                } else if(i >= buffer.length && bufferedReader.read(helpbuffer)>0 && j!=0 && j!=sample.length()) {
-                    /*buffer splits the substring*/
-                    for(int k=0; k<length/2; k++) {
-                        buffer[k] = buffer[k+length/2];
-                    }
-                    for(int k=0; k<length/2; k++) {
-                        buffer[length/2+k] = helpbuffer[k];
-                    }
-                    i = buffer.length/2;
-                     l++;
-                }
+    public List<Integer> kmpSearch(String sample, InputStream inputStream) throws IOException {
+        List<Integer> res= new ArrayList<>(); /*name and type of returned variable changed*/
+        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) { /*try-catch used
+         to close BufferedReader*/
+            if (sample.length() == 0) {
+                return res;
             }
-            z++;
+            int[] prefixFunc = prefixFunction(sample);
+            int j = 0;
+            int z = 0;
+            int l = 0;
+            int length = sample.length() * 2;
+            char[] buffer = new char[length];
+            char[] subsidiaryBuffer = new char[length];
+            while (bufferedReader.read(buffer) > 0) {
+                int i = 0;
+                while (i < buffer.length) {
+                    if (sample.charAt(j) == buffer[i]) {
+                        j++;
+                        i++;
+                    }
+                    if (j == sample.length()) {
+                        res.add(i - j + z * buffer.length + l * buffer.length / 2);
+                        j = prefixFunc[j - 1];
+                    } else if (i < buffer.length && sample.charAt(j) != buffer[i]) {
+                        if (j != 0) {
+                            j = prefixFunc[j - 1];
+                        } else {
+                            i = i + 1;
+                        }
+                    } else if (i >= buffer.length && bufferedReader.read(subsidiaryBuffer) > 0 && j != 0) {
+                        /*buffer splits the substring*/
+                        System.arraycopy(buffer, length / 2, buffer, 0, length / 2);
+                        System.arraycopy(subsidiaryBuffer, 0, buffer, length / 2, length / 2);
+                        i = buffer.length / 2;
+                        l++;
+                    }
+                }
+                z++;
+            }
         }
-        return entry;
+        return res;
     }
 }
