@@ -2,43 +2,43 @@ package com.oop.lobovam;
 
 public class Date {
 
-    final int MIN_YEAR = 0;
-    final int MAX_YEAR = 10000;
+    public static final int MIN_YEAR = -1;
+    public static final int MAX_YEAR = 10000;
 
-    int day;
-    int month;
-    int year;
+    private int day;
+    private int month;
+    private int year;
 
-    enum Weekday
+    public enum Weekday
     {
+        SUNDAY,
         MONDAY,
         TUESDAY,
         WEDNESDAY,
         THURSDAY,
         FRIDAY,
-        SATURDAY,
-        SUNDAY
+        SATURDAY
     }
 
-    Date() {
+    public Date() {
         day = 15;
         month = 10;
         year = 1582;
     }
 
-    Date(int d, int m, int y) {
-        if(isYearValid(y)) {
+    public Date(int day, int month, int year) {
+        if(isYearValid(year)) {
             throw new IllegalArgumentException("Year should be more than 1000, but less than 10000");
         }
-        year = y;
-        if(isMonthValid(m)) {
+        this.year = year;
+        if(isMonthValid(month)) {
             throw new IllegalArgumentException("Month should be more than 0 but less than 13");
         }
-        month = m;
-        if(isDayValid(d, m, y)) {
+        this.month = month;
+        if(isDayValid(day, month, year)) {
             throw new IllegalArgumentException("This day does not exist!");
         }
-        day = d;
+        this.day = day;
     }
 
     public static boolean isLeapYear(int year) {
@@ -55,7 +55,7 @@ public class Date {
 
     public int getYear() { return year; }
 
-    public void setDay(int day ) {
+    public void setDay(int day) {
         if(isDayValid(day, month, year)) {
             throw new IllegalArgumentException("This day does not exist!");
         }
@@ -76,10 +76,10 @@ public class Date {
         this.year = year;
     }
 
-    public  void setDate(int day, int month, int year) {
-        setDay(day);
-        setMonth(month);
+    public void setDate(int day, int month, int year) {
         setYear(year);
+        setMonth(month);
+        setDay(day);
     }
 
     private boolean isYearValid(int year) {
@@ -87,12 +87,12 @@ public class Date {
     }
 
     private boolean isMonthValid(int month) {
-        return (month < 1) || (month > 12);
+        return (month < 0) || (month > 12);
     }
 
     private boolean isDayValid(int day, int month, int year)
     {
-        return ((day < 1) || ((month != 1 || day > 31) &&
+        return ((day < 0) || ((month != 1 || day > 31) &&
                 (isLeapYear(year) ? (month != 2 || day > 29) : (month != 2 || day > 28)) &&
                 (month != 3 || day > 31) &&
                 (month != 4 || day > 30) &&
@@ -120,21 +120,6 @@ public class Date {
 
     public Weekday weekday() {
         int dayOfWeek = weekdayNumber();
-        switch (dayOfWeek) {
-            case(1):
-                return (Weekday.MONDAY);
-            case(2):
-                return (Weekday.TUESDAY);
-            case(3):
-                return (Weekday.WEDNESDAY);
-            case(4):
-                return (Weekday.THURSDAY);
-            case(5):
-                return (Weekday.FRIDAY);
-            case(6):
-                return (Weekday.SATURDAY);
-            default:
-                return (Weekday.SUNDAY);
-        }
+        return Weekday.values()[dayOfWeek];
     }
 }

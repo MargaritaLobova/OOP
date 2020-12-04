@@ -11,7 +11,7 @@ class CalendarTest {
     @Test
     void Weekday1024DaysOver() {
         Date date = new Date(30, 11, 2020);
-        date = calendar.addTime(1024, date, "d");
+        date = calendar.addDays(1024, date);
         Date.Weekday actual = date.weekday();
         assertEquals(Date.Weekday.WEDNESDAY, actual);
     }
@@ -36,7 +36,7 @@ class CalendarTest {
     @Test
     void month17WeeksOver() {
         Date date = new Date(30, 11, 2020);
-        date = calendar.addTime(17*7, date, "d");
+        date = calendar.addDays(17*7, date);
         System.out.println("After 17 weeks it will be month №" + date.getMonth());
         assertEquals(3, date.getMonth());
     }
@@ -54,10 +54,10 @@ class CalendarTest {
     void friday13() {
         Date date = new Date(30, 11, 2020);
         while(date.getDay() != 13 ) {
-            date = calendar.addTime(1, date, "d");
+            date = calendar.addDays(1, date);
         }
         while(date.weekday()!= Date.Weekday.FRIDAY) {
-            date = calendar.addTime(1, date, "m");
+            date = calendar.addMonths(1, date);
         }
 
         System.out.println(date.getDay());
@@ -81,45 +81,53 @@ class CalendarTest {
     @Test
     void addTest() {
         Date actual = new Date(12, 3, 2020);
-        actual = calendar.addTime(1234, actual, "y");
+        actual = calendar.addYears(1234, actual);
         Date expected = new Date(12, 3, 3254);
-        assertEquals(expected.getClass(), actual.getClass());
-        actual = calendar.addTime(12, actual, "m");
-        expected = new Date(12, 3, 2021);
-        assertEquals(expected.getClass(), actual.getClass());
+        assertEquals(expected.getDay(), actual.getDay());
+        assertEquals(expected.getMonth(), actual.getMonth());
+        assertEquals(expected.getYear(), actual.getYear());
+        actual = calendar.addMonths(12, actual);
+        expected = new Date(12, 3, 3255);
+        assertEquals(expected.getDay(), actual.getDay());
+        assertEquals(expected.getMonth(), actual.getMonth());
+        assertEquals(expected.getYear(), actual.getYear());
         expected = new Date(29, 2, 2020);
-        actual = calendar.addTime(108, expected, "m");
+        actual = calendar.addMonths(108, expected);
         expected = new Date(1, 3, 2029);
-        assertEquals(expected.getClass(), actual.getClass());
+        assertEquals(expected.getDay(), actual.getDay());
+        assertEquals(expected.getMonth(), actual.getMonth());
+        assertEquals(expected.getYear(), actual.getYear());
         expected = new Date(29, 2, 2020);
-        actual = calendar.addTime(100, expected, "d");
+        actual = calendar.addDays(100, expected);
         expected = new Date(8, 6, 2020);
-        assertEquals(expected.getClass(), actual.getClass());
+        assertEquals(expected.getDay(), actual.getDay());
+        assertEquals(expected.getMonth(), actual.getMonth());
+        assertEquals(expected.getYear(), actual.getYear());
     }
 
     @Test
     void subTest() {
         Date actual = new Date(12, 3, 2020);
-        actual = calendar.subTime(1234, actual, "y");
+        actual = calendar.subYears(1234, actual);
         Date expected = new Date(12, 3, 786);
         assertEquals(expected.getDay(), actual.getDay());
         assertEquals(expected.getMonth(), actual.getMonth());
         assertEquals(expected.getYear(), actual.getYear());
-        actual = calendar.subTime(12, actual, "m");
+        actual = calendar.subMonths(12, actual);
         expected = new Date(12, 3, 785);
         assertEquals(expected.getDay(), actual.getDay());
         assertEquals(expected.getMonth(), actual.getMonth());
         assertEquals(expected.getYear(), actual.getYear());
 
         expected = new Date(29, 2, 2020);
-        actual = calendar.subTime(108, expected, "m");
+        actual = calendar.subMonths(108, expected);
         expected = new Date(1, 3, 2011);
         assertEquals(expected.getDay(), actual.getDay());
         assertEquals(expected.getMonth(), actual.getMonth());
         assertEquals(expected.getYear(), actual.getYear());
 
         expected = new Date(29, 2, 2020);
-        actual = calendar.subTime(100, expected, "d");
+        actual = calendar.subDays(100, expected);
         expected = new Date(21, 11, 2019);
         assertEquals(expected.getDay(), actual.getDay());
         assertEquals(expected.getMonth(), actual.getMonth());
@@ -130,26 +138,18 @@ class CalendarTest {
     void subDateTest() {
         Date date = new Date(29, 2, 2020);
         Date date1 = new Date(1, 8, 1974);
-        calendar.subDates(date, date1);
+        Date actual = calendar.subDates(date, date1);
+        Date expected = new Date(28, 6, 45);
+        assertEquals(expected.getDay(), actual.getDay());
+        assertEquals(expected.getMonth(), actual.getMonth());
+        assertEquals(expected.getYear(), actual.getYear());
+        date.setDate(30, 11, 2020);
+        date1.setDate(1, 12, 2020);
+        actual = calendar.subDates(date1, date);
+        expected.setDate(29, 1, 0);
+        assertEquals(expected.getDay(), actual.getDay());
+        assertEquals(expected.getMonth(), actual.getMonth());
+        assertEquals(expected.getYear(), actual.getYear());
     }
 
-    /*------  EXCEPTION TEST  ------*/
-
-    @Test
-    void addSubExceptionTest() {
-        Date date = new Date();
-        try {
-            calendar.addTime(1024, date, "o");
-            fail( "My method didn't throw  IllegalArgumentException when I expected it to" );
-        } catch (IllegalArgumentException expectedException) {
-            expectedException.printStackTrace();
-        }
-        try {
-            calendar.subTime(1024, date, "o");
-            fail( "My method didn't throw  IllegalArgumentException when I expected it to" );
-        } catch (IllegalArgumentException expectedException) {
-            expectedException.printStackTrace();
-        }
-
-    }
 }
