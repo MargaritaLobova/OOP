@@ -50,26 +50,25 @@ public class SubstringSearch {
             while (bufferedReader.read(buffer) > 0) {
                 int i = 0;
                 while (i < buffer.length) {
-                        if (sample.charAt(j) == buffer[i]) {
-                            j++;
-                            i++;
-                            //aabbaaaa
-                        }
-                        if (j == sample.length()) {
-                            res.add(i - j + z * buffer.length + l * buffer.length / 2);
+                    if (sample.charAt(j) == buffer[i]) {
+                        j++;
+                        i++;
+                    }
+                    if (j == sample.length()) {
+                        res.add(i - j + z * buffer.length + l * buffer.length / 2);
+                        j = prefixFunc[j - 1];
+                    } else if (i < buffer.length && sample.charAt(j) != buffer[i]) {
+                        if (j != 0) {
                             j = prefixFunc[j - 1];
-                        } else if (i < buffer.length && sample.charAt(j) != buffer[i]) {
-                            if (j != 0) {
-                                j = prefixFunc[j - 1];
-                            } else {
-                                i = i + 1;
-                            }
-                        } else if (i >= buffer.length && bufferedReader.read(subsidiaryBuffer) > 0 && j != 0) {
-                            /*buffer splits the substring*/
-                            System.arraycopy(buffer, length / 2, buffer, 0, length / 2);
-                            System.arraycopy(subsidiaryBuffer, 0, buffer, length / 2, length / 2);
-                            i = buffer.length / 2;
-                            l++;
+                        } else {
+                            i = i + 1;
+                        }
+                    } else if (i >= buffer.length && bufferedReader.read(subsidiaryBuffer) > 0 && j != 0) {
+                        /*buffer splits the substring*/
+                        System.arraycopy(buffer, length / 2, buffer, 0, length / 2);
+                        System.arraycopy(subsidiaryBuffer, 0, buffer, length / 2, length / 2);
+                        i = buffer.length / 2;
+                        l++;
                     }
                 }
                 z++;
