@@ -1,13 +1,14 @@
 package com.margoLobova.oop;
 
 import java.util.Scanner;
-import java.util.Stack;
+
 
 /**
  * Engineer calculator for real numbers. Prefix terms. Сonsole input and output.
  */
 public class Calculator {
     private final String string;
+    private final Stack<Double> stack = new Stack<Double>();
 
     Calculator(String string) {
         this.string = string;
@@ -17,39 +18,45 @@ public class Calculator {
      * @return Double value - the result of computation
      */
     public Double calculate() {
-        Stack<Double> stack = new Stack<>();
+        if (string.equals("")) {
+            throw new IllegalArgumentException("Empty string!");
+        }
         String[] strings = string.split(" ");
         for (int i = strings.length - 1; i >= 0; i--) {
             if (!isOperation(strings[i])) {
-                stack.add(Double.valueOf(strings[i]));
+                try {
+                    stack.push(Double.valueOf(strings[i]));
+                } catch (NumberFormatException e) {
+                    throw new IllegalArgumentException(e);
+                }
             } else {
                 switch (strings[i]) {
                     case ("+"):
-                        stack.add(add(stack));
+                        stack.push(add());
                         break;
                     case ("-"):
-                        stack.add(subtract(stack));
+                        stack.push(subtract());
                         break;
                     case ("*"):
-                        stack.add(multiply(stack));
+                        stack.push(multiply());
                         break;
                     case ("/"):
-                        stack.add(divide(stack));
+                        stack.push(divide());
                         break;
                     case ("sin"):
-                        stack.add(sin(stack));
+                        stack.push(sin());
                         break;
                     case ("cos"):
-                        stack.add(cos(stack));
+                        stack.push(cos());
                         break;
                     case ("pow"):
-                        stack.add(pow(stack));
+                        stack.push(pow());
                         break;
                     case ("log"):
-                        stack.add(log(stack));
+                        stack.push(log());
                         break;
                     case ("sqrt"):
-                        stack.add(sqrt(stack));
+                        stack.push(sqrt());
                         break;
                     default:
                         throw new IllegalArgumentException("Use proper operations.");
@@ -69,39 +76,39 @@ public class Calculator {
                 string.equals("cos") || string.equals("pow");
     }
 
-    private Double add(Stack<Double> stack) {
+    private Double add() {
         return stack.pop() + stack.pop();
     }
 
-    private Double subtract(Stack<Double> stack) {
+    public Double subtract() {
         return stack.pop() - stack.pop();
     }
 
-    private Double multiply(Stack<Double> stack) {
+    private Double multiply() {
         return stack.pop() * stack.pop();
     }
 
-    private Double divide(Stack<Double> stack) {
+    private Double divide() {
         return stack.pop() / stack.pop();
     }
 
-    private Double log(Stack<Double> stack) {
+    private Double log() {
         return Math.log(stack.pop());
     }
 
-    private Double sqrt(Stack<Double> stack) {
+    private Double sqrt() {
         return Math.sqrt(stack.pop());
     }
 
-    private Double pow(Stack<Double> stack) {
+    private Double pow() {
         return Math.pow(stack.pop(), stack.pop());
     }
 
-    private Double sin(Stack<Double> stack) {
+    private Double sin() {
         return Math.sin(stack.pop());
     }
 
-    private Double cos(Stack<Double> stack) {
+    private Double cos() {
         return Math.cos(stack.pop());
     }
 
