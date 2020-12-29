@@ -18,16 +18,16 @@ import java.util.List;
  */
 public class Notebook {
 
-    @CommandLine.Option(names = {"-a", "--add"}, arity = "2")
+    @CommandLine.Option(names = {"-a", "--add"}, arity = "2", paramLabel = "NOTE_NAME NOTE_TEXT", description = "Add new note")
     String[] newNote = {};
 
-    @CommandLine.Option(names = "--remove")
+    @CommandLine.Option(names = {"-rm", "--remove"}, arity = "1", paramLabel = "NAME", description = "Remove notes by name")
     String removedNote = "";
 
-    @CommandLine.Option(names = "--show", arity = "0..*")
+    @CommandLine.Option(names = {"-s", "--show"}, arity = "0..*", paramLabel = "KEYWORDS", description = "Show notes in notebook. If there are some args - there are keywords. If not - it'll show all of them.")
     String[] keywords = {};
 
-    @CommandLine.Option(names = "--path", arity = "1")
+    @CommandLine.Option(names = {"-p", "--path"}, arity = "1", paramLabel = "PATH_TO_NOTEBOOK_JSON_FILE)", description = "If you want to load previous notebook - fill the path field")
     String path = "";
 
     @Expose
@@ -40,9 +40,10 @@ public class Notebook {
      *                two Strings - noteName, noteText;
      */
     public void addNote(String... newNote) {
-        if (newNote[0] != null && newNote[1] != null) {
+        if ( newNote.length!=0 && newNote.length!=1 && newNote[0] != null && newNote[1] != null) {
             notes.add(new Note(newNote[0], newNote[1]));
-        } else throw new IllegalArgumentException("Some troubles with adding notes. It is possible that the number of transmitted arguments is not correct");
+        } else
+            throw new IllegalArgumentException("Some troubles with adding notes. It is possible that the number of transmitted arguments is not correct");
     }
 
     /**
@@ -63,6 +64,9 @@ public class Notebook {
      * Printing all notes from the current list of notes.
      */
     public void printNotes() {
+        if(notes.size()==0) {
+            return;
+        }
         for (Note note : notes) {
             System.out.println("noteName:" + note.getNoteName() + " " + "noteText:" + note.getNoteText());
         }
@@ -73,13 +77,10 @@ public class Notebook {
      *
      * @param keywords supposed to came from the console
      */
-    public void printNotesWithKeywords(String[] keywords) {
+    public void printNotesWithKeywords(String... keywords) {
         for (String keyword : keywords) {
             for (Note note : notes) {
-                if (checkKeywords(keyword, note.getNoteName())) {
-                    System.out.println("noteName:" + note.getNoteName() + "noteText:" + note.getNoteText());
-                }
-                if (checkKeywords(keyword, note.getNoteText())) {
+                if (checkKeywords(keyword, note.getNoteName())||checkKeywords(keyword, note.getNoteText())) {
                     System.out.println("noteName:" + note.getNoteName() + "noteText:" + note.getNoteText());
                 }
             }
@@ -89,10 +90,11 @@ public class Notebook {
     /**
      * Subsidiary method for printNotesWithKeywords method(see above)
      * Dividing by words noteName and noteText and checking if they are equal to keyword
+     *
      * @param keyword one of keywords came from the console
-     * @param note noteText or noteName
+     * @param note    noteText or noteName
      * @return true if keyword == wordFromNoteString
-     *          false otherwise;
+     * false otherwise;
      */
     private boolean checkKeywords(String keyword, String note) {
         String[] noteDivided = note.split(" ");
@@ -145,10 +147,11 @@ public class Notebook {
      * @throws IOException if something wrong with file access
      */
     public void writeNotebook() throws IOException {
-        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-        System.out.println("Your current path to Notebook json file: "+ path);
-        File file = new File(path);
-        FileWriter fileWriter = new FileWriter(file);
-        fileWriter.write(gson.toJson(notes));
+        Gson gson = new Gson();
+        System.out.println("Your current path to Notebook json file: " + path);
+        String string = gson.toJson(notes);
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
+            writer.write(string);
+        }
     }
 }

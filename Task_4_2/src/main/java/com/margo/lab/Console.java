@@ -1,5 +1,7 @@
 package com.margo.lab;
+
 import picocli.CommandLine;
+
 import java.io.*;
 
 public class Console {
