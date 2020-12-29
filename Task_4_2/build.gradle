@@ -1,0 +1,19 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+test {
+    useJUnitPlatform()
+}
+
+dependencies {
+    implementation 'org.junit.jupiter:junit-jupiter:5.4.2'
+    implementation 'info.picocli:picocli:4.5.2'
+    implementation 'com.google.code.gson:gson:2.8.6'
+}
