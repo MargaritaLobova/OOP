@@ -6,9 +6,14 @@ import java.io.*;
 
 public class Console {
 
-    public static void main(String[] args) throws IOException {
+    String[] args;
+    Notebook notebook = new Notebook();
 
-        Notebook notebook = new Notebook();
+    public Console(String[] s) {
+        args = s;
+    }
+
+    public void myMain() throws IOException {
 
         try {
             new CommandLine(notebook).parseArgs(args);
@@ -19,12 +24,13 @@ public class Console {
 
         notebook.takeNotebook();
 
+
         notebook.addNote(notebook.newNote);
 
         if (notebook.keywords != null) {
             if (notebook.keywords.length == 0) {
                 notebook.printNotes();
-            } else if (notebook.keywords.length > 2) {
+            } else {
                 notebook.printNotesWithKeywords(notebook.keywords);
             }
         } else throw new IllegalArgumentException("Keywords = null");

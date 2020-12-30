@@ -7,10 +7,14 @@ import picocli.CommandLine;
 
 import java.io.*;
 import java.lang.reflect.Type;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
+
+import static com.sun.javafx.scene.control.skin.Utils.getResource;
 
 /**
  * Notebook class created for transactions with Notes(see the class Note above);
@@ -40,10 +44,9 @@ public class Notebook {
      *                two Strings - noteName, noteText;
      */
     public void addNote(String... newNote) {
-        if ( newNote.length!=0 && newNote.length!=1 && newNote[0] != null && newNote[1] != null) {
+        if (newNote.length != 0 && newNote.length != 1 && newNote[0] != null && newNote[1] != null) {
             notes.add(new Note(newNote[0], newNote[1]));
-        } else
-            throw new IllegalArgumentException("Some troubles with adding notes. It is possible that the number of transmitted arguments is not correct");
+        }
     }
 
     /**
@@ -64,9 +67,10 @@ public class Notebook {
      * Printing all notes from the current list of notes.
      */
     public void printNotes() {
-        if(notes.size()==0) {
+        if (notes.size() == 0) {
             return;
         }
+       // notes.sort(Comparator.comparing(Note::getTime));
         for (Note note : notes) {
             System.out.println("noteName:" + note.getNoteName() + " " + "noteText:" + note.getNoteText());
         }
@@ -78,9 +82,10 @@ public class Notebook {
      * @param keywords supposed to came from the console
      */
     public void printNotesWithKeywords(String... keywords) {
+       // notes.sort(Comparator.comparing(Note::getTime));
         for (String keyword : keywords) {
             for (Note note : notes) {
-                if (checkKeywords(keyword, note.getNoteName())||checkKeywords(keyword, note.getNoteText())) {
+                if (checkKeywords(keyword, note.getNoteName()) || checkKeywords(keyword, note.getNoteText())) {
                     System.out.println("noteName:" + note.getNoteName() + "noteText:" + note.getNoteText());
                 }
             }
@@ -114,7 +119,9 @@ public class Notebook {
     public void takeNotebook() throws IOException {
 
         if (path.equals("")) {
-            path = "..\\Task_4_2\\src\\main\\resources\\File.json";
+            path = System.getProperty("user.dir");
+            File db = new File(path, "CreateNewFile.json");
+            path = db.getPath();
             return;
         }
 
@@ -136,7 +143,6 @@ public class Notebook {
         notes = gson.fromJson(json, datasetListType);
         if (notes == null) {
             notes = new ArrayList<>();
-
         }
     }
 
@@ -150,7 +156,8 @@ public class Notebook {
         Gson gson = new Gson();
         System.out.println("Your current path to Notebook json file: " + path);
         String string = gson.toJson(notes);
-        try(BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
             writer.write(string);
         }
     }

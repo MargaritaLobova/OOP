@@ -12,6 +12,7 @@ public class Note {
     private String noteName;
     @Expose
     private String noteText;
+
     private Date time;
 
     /**
