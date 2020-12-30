@@ -70,7 +70,7 @@ public class Notebook {
         if (notes.size() == 0) {
             return;
         }
-       // notes.sort(Comparator.comparing(Note::getTime));
+        notes.sort(Comparator.comparing(Note::getTime));
         for (Note note : notes) {
             System.out.println("noteName:" + note.getNoteName() + " " + "noteText:" + note.getNoteText());
         }
@@ -82,7 +82,7 @@ public class Notebook {
      * @param keywords supposed to came from the console
      */
     public void printNotesWithKeywords(String... keywords) {
-       // notes.sort(Comparator.comparing(Note::getTime));
+        notes.sort(Comparator.comparing(Note::getTime));
         for (String keyword : keywords) {
             for (Note note : notes) {
                 if (checkKeywords(keyword, note.getNoteName()) || checkKeywords(keyword, note.getNoteText())) {
