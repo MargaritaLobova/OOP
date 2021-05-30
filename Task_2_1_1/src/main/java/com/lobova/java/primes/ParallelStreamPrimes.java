@@ -5,17 +5,17 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Parallel check with usage of the ParallelStream
+ * Parallel check with usage of the ParallelStream.
  */
 public class ParallelStreamPrimes {
     static boolean hasNotPrime = false;
 
     /**
-     * @param array of numbers that are needed to be checked
+     * @param array of numbers that are needed to be checked.
      * @return true if there is not prime number in the array(at least one), false if there are
      * some prime numbers.
      */
-    public static boolean streamRun(Long[] array) {
+    public static boolean streamRun(final Long[] array) {
         List<Long> list = Arrays.asList(array);
         Optional<Long> n = list
                 .parallelStream()

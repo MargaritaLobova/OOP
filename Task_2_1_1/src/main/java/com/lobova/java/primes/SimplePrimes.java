@@ -11,7 +11,7 @@ public class SimplePrimes {
      * @return true if there is not prime number in the array(at least one), false if there are
      * some prime numbers.
      */
-    public static boolean sequentialRun(long[] array) {
+    public static boolean sequentialRun(final long[] array) {
         for (long l : array) {
             if (isPrime.isNotPrime(l)) {
                 hasNotPrime = true;

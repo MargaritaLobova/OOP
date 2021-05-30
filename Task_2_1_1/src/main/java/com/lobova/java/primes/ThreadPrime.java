@@ -3,7 +3,7 @@ import java.util.Arrays;
 
 /**
  * Parallel check with usage of the Thread class with the ability
- * to specify the number of threads used
+ * to specify the number of threads used.
  */
 public class ThreadPrime {
     static int THREADS = Runtime.getRuntime().availableProcessors();
@@ -11,8 +11,8 @@ public class ThreadPrime {
     public static long[] arr;
 
     /**
-     * @param array           of numbers that are needed to be checked
-     * @param numberOfThreads if its needed, otherwise - all available processors
+     * @param array           of numbers that are needed to be checked.
+     * @param numberOfThreads if its needed, otherwise - all available processors.
      * @return true if there is not prime number in the array(at least one), false if there are
      * some prime numbers.
      * @throws Exception
