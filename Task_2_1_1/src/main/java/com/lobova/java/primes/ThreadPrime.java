@@ -40,6 +40,9 @@ public class ThreadPrime {
     }
 }
 
+/**
+ * Class to work with threads.
+ */
 class PrimeRun implements Runnable {
     final long[] array = ThreadPrime.getArray();
     final int ID;
@@ -48,6 +51,9 @@ class PrimeRun implements Runnable {
         ID = i;
     }
 
+    /**
+     * Method to run thread check.
+     */
     public void run() {
         for (long l : array) {
             if (l % ThreadPrime.THREADS == ID && isPrime.isNotPrime(l)) {

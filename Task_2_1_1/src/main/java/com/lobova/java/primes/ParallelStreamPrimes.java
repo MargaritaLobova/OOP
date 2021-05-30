@@ -8,7 +8,7 @@ import java.util.Optional;
  * Parallel check with usage of the ParallelStream.
  */
 public class ParallelStreamPrimes {
-    static boolean hasNotPrime = false;
+    private static boolean hasNotPrime = false;
 
     /**
      * @param array of numbers that are needed to be checked.
