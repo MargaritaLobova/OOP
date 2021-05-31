@@ -104,9 +104,6 @@
     <module name="InvalidJavadocPosition"/>
     <module name="JavadocMethod"/>
     <module name="JavadocType"/>
-    <module name="JavadocVariable">
-      <property name="scope" value="private"/>
-  </module>
     <module name="JavadocStyle"/>
     <module name="MissingJavadocMethod"/>
     <!-- Enables @SuppressWarnings Support                -->
@@ -172,7 +169,6 @@
     <module name="HiddenField"/>
     <module name="IllegalInstantiation"/>
     <module name="InnerAssignment"/>
-    <module name="MagicNumber"/>
     <module name="MissingSwitchDefault"/>
     <module name="MultipleVariableDeclarations"/>
     <module name="SimplifyBooleanExpression"/>
@@ -182,7 +178,6 @@
     <!-- See https://checkstyle.org/config_design.html -->
     <module name="DesignForExtension"/>
     <module name="FinalClass"/>
-    <module name="HideUtilityClassConstructor"/>
     <module name="InterfaceIsType"/>
     <module name="VisibilityModifier"/>
 

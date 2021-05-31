@@ -13,7 +13,7 @@ public class SimplePrimes {
      */
     public static boolean sequentialRun(final long[] array) {
         for (long l : array) {
-            if (isPrime.isNotPrime(l)) {
+            if (IsPrime.isNotPrime(l)) {
                 hasNotPrime = true;
                 break;
             }

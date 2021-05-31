@@ -19,7 +19,7 @@ public class ParallelStreamPrimes {
         List<Long> list = Arrays.asList(array);
         Optional<Long> n = list
                 .parallelStream()
-                .filter(isPrime::isNotPrime)
+                .filter(IsPrime::isNotPrime)
                 .findFirst();
         if (n.isPresent()) {
             hasNotPrime = true;

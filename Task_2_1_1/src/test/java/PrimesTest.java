@@ -7,7 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class PrimesTest {
 
-    private final long[] testArray = {24571L, 33391L, 35317L, 27644437L, 877L, 115249L, 76801L, 2029L, 10267L, 13669L, 12097L, 631L, 33391L, 2124679L, 16769023L};
+    private final long[] testArray = {24571L, 33391L, 35317L, 27644437L, 877L, 115249L, 76801L,
+            2029L, 10267L, 13669L, 12097L, 631L, 33391L, 2124679L, 16769023L};
     private long[] enlargedTestArray = new long[100000];
 
     public void arrayIncreasing() {

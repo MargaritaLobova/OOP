@@ -8,7 +8,7 @@ import java.util.Arrays;
 public class ThreadPrime {
     static int THREADS = Runtime.getRuntime().availableProcessors();
     static boolean hasNotPrime = false;
-    public static long[] arr;
+    private static long[] arr;
 
     /**
      * @param array           of numbers that are needed to be checked.
@@ -17,17 +17,19 @@ public class ThreadPrime {
      * some prime numbers.
      * @throws Exception
      */
-    public static boolean threadRun(long[] array, int numberOfThreads) throws Exception {
-        if (numberOfThreads > 0 && numberOfThreads < THREADS)
+    public static boolean threadRun(final long[] array, final int numberOfThreads) throws Exception {
+        if (numberOfThreads > 0 && numberOfThreads < THREADS) {
             THREADS = numberOfThreads;
+        }
         Thread[] t = new Thread[THREADS];
         arr = Arrays.copyOf(array, array.length);
         for (int i = 0; i < THREADS; i++) {
             t[i] = new Thread(new PrimeRun(i));
             t[i].start();
         }
-        for (int i = 0; i < THREADS; i++)
+        for (int i = 0; i < THREADS; i++) {
             t[i].join();
+        }
         return hasNotPrime;
     }
 
@@ -35,7 +37,7 @@ public class ThreadPrime {
         return arr;
     }
 
-    public synchronized static void setHasNotPrime() {
+    public static synchronized  void setHasNotPrime() {
         hasNotPrime = true;
     }
 }
@@ -45,10 +47,10 @@ public class ThreadPrime {
  */
 class PrimeRun implements Runnable {
     final long[] array = ThreadPrime.getArray();
-    final int ID;
+    final int id;
 
     public PrimeRun(int i) {
-        ID = i;
+        id = i;
     }
 
     /**
@@ -56,7 +58,7 @@ class PrimeRun implements Runnable {
      */
     public void run() {
         for (long l : array) {
-            if (l % ThreadPrime.THREADS == ID && isPrime.isNotPrime(l)) {
+            if (l % ThreadPrime.THREADS == id && IsPrime.isNotPrime(l)) {
                 ThreadPrime.setHasNotPrime();
                 break;
             }
