@@ -6,8 +6,8 @@ import java.util.Arrays;
  * to specify the number of threads used.
  */
 public class ThreadPrime {
-    static int THREADS = Runtime.getRuntime().availableProcessors();
-    static boolean hasNotPrime = false;
+    public static int threads = Runtime.getRuntime().availableProcessors();
+    private static boolean hasNotPrime = false;
     private static long[] arr;
 
     /**
@@ -18,16 +18,16 @@ public class ThreadPrime {
      * @throws Exception
      */
     public static boolean threadRun(final long[] array, final int numberOfThreads) throws Exception {
-        if (numberOfThreads > 0 && numberOfThreads < THREADS) {
-            THREADS = numberOfThreads;
+        if (numberOfThreads > 0 && numberOfThreads < threads) {
+            threads = numberOfThreads;
         }
-        Thread[] t = new Thread[THREADS];
+        Thread[] t = new Thread[threads];
         arr = Arrays.copyOf(array, array.length);
-        for (int i = 0; i < THREADS; i++) {
+        for (int i = 0; i < threads; i++) {
             t[i] = new Thread(new PrimeRun(i));
             t[i].start();
         }
-        for (int i = 0; i < THREADS; i++) {
+        for (int i = 0; i < threads; i++) {
             t[i].join();
         }
         return hasNotPrime;
@@ -49,7 +49,10 @@ class PrimeRun implements Runnable {
     final long[] array = ThreadPrime.getArray();
     final int id;
 
-    public PrimeRun(int i) {
+    /**
+     * @param i thread number
+     */
+    public PrimeRun(final int i) {
         id = i;
     }
 
@@ -58,7 +61,7 @@ class PrimeRun implements Runnable {
      */
     public void run() {
         for (long l : array) {
-            if (l % ThreadPrime.THREADS == id && IsPrime.isNotPrime(l)) {
+            if (l % ThreadPrime.threads == id && IsPrime.isNotPrime(l)) {
                 ThreadPrime.setHasNotPrime();
                 break;
             }

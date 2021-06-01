@@ -12,7 +12,7 @@ public class IsPrime {
         if (n == 2 || n == 3 || n == 5) {
             return true;
         }
-        if (n <= 1 || (n & 1) == 0 ) {
+        if (n <= 1 || (n & 1) == 0) {
             return false;
         }
         for (int i = 3; (long) i * i <= n; i += 2)

@@ -4,7 +4,7 @@ package com.lobova.java.primes;
  * Sequential run of prime check.
  */
 public class SimplePrimes {
-    static boolean hasNotPrime = false;
+    private static boolean hasNotPrime = false;
 
     /**
      * @param array of numbers that are needed to be checked
