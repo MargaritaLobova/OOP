@@ -10,8 +10,11 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * The class for Pizzeria creation.
+ */
 public class Pizzeria {
-
+    // the number of bakers and delivery men to be hired
     public int numBakers;
     public int numDeliveryMen;
 
@@ -27,10 +30,17 @@ public class Pizzeria {
     public ExecutorService bakerExecutor;
     public ExecutorService deliveryManExecutor;
 
+    // TODO Maybe these also better to put into PizzeriaConfigs in future(?)
     private static final long BAKING_TIME_MILLIS = 1000;
     private static final long DELIVERY_TIME_MILLIS = 1500;
 
-    public Pizzeria(Path path, int wareHouseCapacity, Orders orderList) throws IOException {
+    /**
+     * @param path              path to the JSON file where Pizzeria Configs are
+     * @param wareHouseCapacity the capacity of the storage
+     * @param orderList         the Queue of all the orders
+     * @throws IOException
+     */
+    public Pizzeria(final Path path, final int wareHouseCapacity, final Orders orderList) throws IOException {
 
         String jsonString = new String(Files.readAllBytes(path));
         Gson gson = new Gson();
@@ -39,9 +49,11 @@ public class Pizzeria {
         this.numBakers = configs.numBakers;
         this.numDeliveryMen = configs.numDeliveryMen;
 
-        System.out.println("Pizzeria started" +
-                "\nInitial bakers count: " + this.numBakers +
-                "\nInitial couriers count: " + this.numDeliveryMen);
+        System.out.println("Pizzeria started"
+                + "\nInitial bakers count: "
+                + this.numBakers
+                + "\nInitial couriers count: "
+                + this.numDeliveryMen);
 
         this.orderList = orderList;
         this.wareHouse = new WareHouse(wareHouseCapacity);
@@ -57,6 +69,9 @@ public class Pizzeria {
         }
     }
 
+    /**
+     * Starting the Executors of bakers and delivery men
+     */
     public void start() {
         bakerExecutor = Executors.newFixedThreadPool(bakers.size());
         bakers.forEach(bakerExecutor::execute);
@@ -64,7 +79,9 @@ public class Pizzeria {
         deliveryMen.forEach(deliveryManExecutor::execute);
     }
 
-    // Todo think about it!
+    /**
+     * Finishing the Executors
+     */
     public void stopWork() {
         bakerExecutor.shutdownNow();
         deliveryManExecutor.shutdownNow();
