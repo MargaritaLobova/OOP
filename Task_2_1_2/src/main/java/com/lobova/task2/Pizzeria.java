@@ -35,9 +35,9 @@ public class Pizzeria {
     private static final long DELIVERY_TIME_MILLIS = 1500;
 
     /**
-     * @param path              path to the JSON file where Pizzeria Configs are
-     * @param wareHouseCapacity the capacity of the storage
-     * @param orderList         the Queue of all the orders
+     * @param path              path to the JSON file where Pizzeria Configs are.
+     * @param wareHouseCapacity the capacity of the storage.
+     * @param orderList         the Queue of all the orders.
      * @throws IOException
      */
     public Pizzeria(final Path path, final int wareHouseCapacity, final Orders orderList) throws IOException {
@@ -70,7 +70,7 @@ public class Pizzeria {
     }
 
     /**
-     * Starting the Executors of bakers and delivery men
+     * Starting the Executors of bakers and delivery men.
      */
     public void start() {
         bakerExecutor = Executors.newFixedThreadPool(bakers.size());
@@ -80,7 +80,7 @@ public class Pizzeria {
     }
 
     /**
-     * Finishing the Executors
+     * Finishing the Executors.
      */
     public void stopWork() {
         bakerExecutor.shutdownNow();

@@ -9,9 +9,9 @@ public class DeliveryMan implements Runnable {
     private final Pizzeria workplace;
 
     /**
-     * @param id             of the Delivery Man
-     * @param deliveringTime time that is needed to deliver order
-     * @param workplace      pizzeria where the delivering man is working
+     * @param id             of the Delivery Man.
+     * @param deliveringTime time that is needed to deliver order.
+     * @param workplace      pizzeria where the delivering man is working.
      */
     DeliveryMan(final int id, final long deliveringTime, final Pizzeria workplace) {
         this.id = id;
@@ -41,8 +41,7 @@ public class DeliveryMan implements Runnable {
     }
 
     /**
-     * The working process of the delivery man - taking Pizza from the
-     * warehouse and deliver it.
+     * The working process of the delivery man - taking Pizza from the warehouse and deliver it.
      */
     @Override
     public void run() {

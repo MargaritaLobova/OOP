@@ -10,9 +10,9 @@ public class Baker implements Runnable {
     private final Pizzeria workplace;
 
     /**
-     * @param id               of the baker
-     * @param bakingTimeMillis time that is needed to bake the pizza
-     * @param workplace        pizzeria where the baker is working
+     * @param id               of the baker.
+     * @param bakingTimeMillis time that is needed to bake the pizza.
+     * @param workplace        pizzeria where the baker is working.
      */
     public Baker(final int id, final long bakingTimeMillis, final Pizzeria workplace) {
         this.id = id;
@@ -22,7 +22,7 @@ public class Baker implements Runnable {
     }
 
     /**
-     * @param newOrder Pizza to be bake
+     * @param newOrder Pizza to be bake.
      * @throws InterruptedException
      */
     private void bakePizza(final Pizza newOrder) throws InterruptedException {
@@ -32,7 +32,7 @@ public class Baker implements Runnable {
     }
 
     /**
-     * @param bakedPizza to put it to the warehouse after baking
+     * @param bakedPizza to put it to the warehouse after baking.
      * @throws InterruptedException
      */
     private void putToWareHouse(final Pizza bakedPizza) throws InterruptedException {

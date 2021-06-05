@@ -13,7 +13,7 @@ public class Orders {
     private final LinkedBlockingQueue<Pizza> orders = new LinkedBlockingQueue<>();
 
     /**
-     * @param newOrder the order to be stored into the order list
+     * @param newOrder the order to be stored into the order list.
      * @throws InterruptedException
      */
     public void add(final Pizza newOrder) throws InterruptedException {
@@ -22,7 +22,7 @@ public class Orders {
     }
 
     /**
-     * @return Pizza object (FIFO model - the first in the Queue)
+     * @return Pizza object (FIFO model - the first in the Queue).
      * @throws InterruptedException
      */
     public Pizza take() throws InterruptedException {

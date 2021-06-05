@@ -8,21 +8,21 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class WareHouse {
 
     /**
-     * The Queue for pizzas to be stored correctly
-     * WareHouseCapacity to know the limits of the storage
+     * The Queue for pizzas to be stored correctly.
+     * WareHouseCapacity to know the limits of the storage.
      */
     private final LinkedBlockingQueue<Pizza> wareHouse = new LinkedBlockingQueue<>();
     private final int wareHouseCapacity;
 
     /**
-     * @param wareHouseCapacity the capacity of the warehouse to be created
+     * @param wareHouseCapacity the capacity of the warehouse to be created.
      */
     WareHouse(final int wareHouseCapacity) {
         this.wareHouseCapacity = wareHouseCapacity;
     }
 
     /**
-     * @param newOrder the already baked Pizza to be stored into the warehouse
+     * @param newOrder the already baked Pizza to be stored into the warehouse.
      * @throws InterruptedException
      */
     void add(final Pizza newOrder) throws InterruptedException {
@@ -31,7 +31,7 @@ public class WareHouse {
     }
 
     /**
-     * @return Pizza object (FIFO model - the first in the Queue)
+     * @return Pizza object (FIFO model - the first in the Queue).
      * @throws InterruptedException
      */
     Pizza take() throws InterruptedException {
