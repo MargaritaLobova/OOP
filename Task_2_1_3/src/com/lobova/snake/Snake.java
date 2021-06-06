@@ -61,7 +61,7 @@ public class Snake {
             case UP:
                 snakeHead.y--;
                 break;
-            case DOWN:
+            default:
                 snakeHead.y++;
                 break;
         }
@@ -96,8 +96,8 @@ public class Snake {
      */
     public void drawSnake(final GraphicsContext gc) {
         gc.setFill(Color.web("32CD32"));
-        gc.fillRoundRect(snakeHead.getX() * SQUARE_SIZE, snakeHead.getY() *
-                SQUARE_SIZE, SQUARE_SIZE - 1, SQUARE_SIZE - 1, 35, 35);
+        gc.fillRoundRect(snakeHead.getX() * SQUARE_SIZE, snakeHead.getY() * SQUARE_SIZE,
+                SQUARE_SIZE - 1, SQUARE_SIZE - 1, 35, 35);
 
         for (int i = 1; i < snakeBody.size(); i++) {
             gc.fillRoundRect(snakeBody.get(i).getX() * SQUARE_SIZE, snakeBody.get(i).getY() * SQUARE_SIZE,
