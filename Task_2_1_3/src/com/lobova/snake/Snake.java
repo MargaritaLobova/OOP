@@ -16,7 +16,6 @@ import static com.lobova.snake.Main.HEIGHT;
 import static com.lobova.snake.Main.SQUARE_SIZE;
 
 
-
 /**
  * Class for Snake control.
  */
@@ -120,7 +119,7 @@ public class Snake {
     /**
      * @return true if there was a crash, false if everything's fine
      */
-    public boolean crash_check() {
+    public boolean crashCheck() {
         return snakeHead.x < 0 || snakeHead.y < 0 || snakeHead.x * SQUARE_SIZE >= WIDTH
                 || snakeHead.y * SQUARE_SIZE >= HEIGHT;
     }

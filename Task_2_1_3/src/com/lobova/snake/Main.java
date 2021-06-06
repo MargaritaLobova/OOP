@@ -83,7 +83,7 @@ public class Main extends Application {
         snake.drawSnake(gc);
         snake.moveBody();
         snake.moveHead(currentDirection);
-        if(snake.crash_check()) {
+        if (snake.crashCheck()) {
             finishGame();
         }
         for (int i = 0; i < food.foodList.size(); i++) {
