@@ -4,6 +4,7 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -15,10 +16,11 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+
 public class Main extends Application {
 
-    private static final int WIDTH = 700;
-    private static final int HEIGHT = WIDTH;
+    public static final int WIDTH = 600;
+    public static final int HEIGHT = WIDTH;
     public static final int ROWS = 30;
     public static final int COLS = ROWS;
     public static final int SQUARE_SIZE = WIDTH / ROWS;
@@ -75,11 +77,15 @@ public class Main extends Application {
     }
 
     private void run(final GraphicsContext gc) {
+
         drawBackground(gc);
         food.drawFood(gc);
         snake.drawSnake(gc);
         snake.moveBody();
         snake.moveHead(currentDirection);
+        if(snake.crash_check()) {
+            finishGame();
+        }
         for (int i = 0; i < food.foodList.size(); i++) {
             if (food.foodList.get(i).equals(snake.getSnakeHead())) {
                 snake.eatFood();
@@ -87,6 +93,13 @@ public class Main extends Application {
             }
         }
 
+    }
+
+    /**
+     * Maybe it should be done in the better way.
+     */
+    private void finishGame() {
+        Platform.exit();
     }
 
     private void drawBackground(final GraphicsContext gc) {

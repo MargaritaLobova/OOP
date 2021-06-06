@@ -11,8 +11,11 @@ import static com.lobova.snake.Main.ROWS;
 import static com.lobova.snake.Main.LEFT;
 import static com.lobova.snake.Main.RIGHT;
 import static com.lobova.snake.Main.UP;
-import static com.lobova.snake.Main.DOWN;
+import static com.lobova.snake.Main.WIDTH;
+import static com.lobova.snake.Main.HEIGHT;
 import static com.lobova.snake.Main.SQUARE_SIZE;
+
+
 
 /**
  * Class for Snake control.
@@ -112,5 +115,13 @@ public class Snake {
         Point tail = new Point();
         tail.setLocation(snakeBody.get(snakeBody.size() - 1).getX(), snakeBody.get(snakeBody.size() - 1).getY());
         addSnakeBody(tail);
+    }
+
+    /**
+     * @return true if there was a crash, false if everything's fine
+     */
+    public boolean crash_check() {
+        return snakeHead.x < 0 || snakeHead.y < 0 || snakeHead.x * SQUARE_SIZE >= WIDTH
+                || snakeHead.y * SQUARE_SIZE >= HEIGHT;
     }
 }
