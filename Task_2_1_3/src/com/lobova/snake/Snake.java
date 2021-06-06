@@ -36,7 +36,7 @@ public class Snake {
     /**
      * @param snakeHead new Point for snake's head.
      */
-    public void setSnakeHead(Point snakeHead) {
+    public void setSnakeHead(final Point snakeHead) {
         this.snakeHead = snakeHead;
     }
 
@@ -50,7 +50,7 @@ public class Snake {
     /**
      * @param somewhere the direction - where the snake should move.
      */
-    public void moveHead(int somewhere) {
+    public void moveHead(final int somewhere) {
         switch (somewhere) {
             case LEFT:
                 snakeHead.x--;
@@ -80,7 +80,7 @@ public class Snake {
     /**
      * @param point new Point to be added.
      */
-    public void addSnakeBody(Point point) {
+    public void addSnakeBody(final Point point) {
         snakeBody.add(point);
     }
 
@@ -94,13 +94,14 @@ public class Snake {
     /**
      * @param gc Graphics context to draw the snake.
      */
-    public void drawSnake(GraphicsContext gc) {
+    public void drawSnake(final GraphicsContext gc) {
         gc.setFill(Color.web("32CD32"));
-        gc.fillRoundRect(snakeHead.getX() * SQUARE_SIZE, snakeHead.getY() * SQUARE_SIZE, SQUARE_SIZE - 1, SQUARE_SIZE - 1, 35, 35);
+        gc.fillRoundRect(snakeHead.getX() * SQUARE_SIZE, snakeHead.getY() *
+                SQUARE_SIZE, SQUARE_SIZE - 1, SQUARE_SIZE - 1, 35, 35);
 
         for (int i = 1; i < snakeBody.size(); i++) {
-            gc.fillRoundRect(snakeBody.get(i).getX() * SQUARE_SIZE, snakeBody.get(i).getY() * SQUARE_SIZE, SQUARE_SIZE - 1,
-                    SQUARE_SIZE - 1, 10, 10);
+            gc.fillRoundRect(snakeBody.get(i).getX() * SQUARE_SIZE, snakeBody.get(i).getY() * SQUARE_SIZE,
+                    SQUARE_SIZE - 1, SQUARE_SIZE - 1, 10, 10);
         }
     }
 

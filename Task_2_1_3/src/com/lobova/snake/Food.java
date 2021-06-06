@@ -30,7 +30,7 @@ public class Food {
     /**
      * @param wasEaten the piece of food that was eaten by the snake.
      */
-    public void generateFood(Point wasEaten) {
+    public void generateFood(final Point wasEaten) {
         setRandomPoint(wasEaten);
     }
 
@@ -39,7 +39,7 @@ public class Food {
      *
      * @param wasEaten the piece of food that was eaten by the snake.
      */
-    private void setRandomPoint(Point wasEaten) {
+    private void setRandomPoint(final Point wasEaten) {
         Random random = new Random();
         int randX = abs(random.nextInt() % (COLS - 1));
         int randY = abs(random.nextInt() % (ROWS - 1));
@@ -59,7 +59,7 @@ public class Food {
     /**
      * @param gc Graphics Context to food to be drawn.
      */
-    public void drawFood(GraphicsContext gc) {
+    public void drawFood(final GraphicsContext gc) {
         gc.setFill(Color.web("FA8072"));
         for (int i = 0; i < foodList.size(); i++) {
             gc.fillRoundRect(foodList.get(i).x * SQUARE_SIZE, foodList.get(i).y * SQUARE_SIZE,

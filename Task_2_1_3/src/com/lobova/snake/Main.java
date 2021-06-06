@@ -36,7 +36,7 @@ public class Main extends Application {
     private int currentDirection;
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(final Stage primaryStage) throws Exception {
         Group root = new Group();
         Canvas canvas = new Canvas(WIDTH, HEIGHT);
         root.getChildren().add(canvas);
@@ -48,7 +48,7 @@ public class Main extends Application {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
             @Override
-            public void handle(KeyEvent event) {
+            public void handle(final KeyEvent event) {
                 KeyCode code = event.getCode();
                 if (code == KeyCode.RIGHT || code == KeyCode.D) {
                     if (currentDirection != LEFT) {
@@ -74,7 +74,7 @@ public class Main extends Application {
         timeline.play();
     }
 
-    private void run(GraphicsContext gc) {
+    private void run(final GraphicsContext gc) {
         drawBackground(gc);
         food.drawFood(gc);
         snake.drawSnake(gc);
@@ -89,7 +89,7 @@ public class Main extends Application {
 
     }
 
-    private void drawBackground(GraphicsContext gc) {
+    private void drawBackground(final GraphicsContext gc) {
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
                 if ((i + j) % 2 == 0) {
@@ -102,7 +102,7 @@ public class Main extends Application {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         launch(args);
     }
 }
